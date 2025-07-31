@@ -1,0 +1,28 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+
+# Publish
+*.publishsettings
+
+# ASP.NET
+appsettings.Development.json
+
+# Logs
+*.log
+
+# Others
+*.db
+*.sqlite
+*.bak
+
+# OS files
+Thumbs.db
+.DS_Store
