@@ -14,5 +14,11 @@ namespace ApiDelfin.Repositories
         public bool Exists(string dni) => _context.Users.Any(u => u.Dni == dni);
 
         public void Save() => _context.SaveChanges();
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+        }
+
     }
 }

@@ -35,5 +35,25 @@ namespace ApiDelfin.Services
 
             return BCrypt.Net.BCrypt.Verify(password, user.PasswordHash) ? user : null;
         }
+
+        public bool Update(string dni, string? name = null, string? password = null, bool? isAdmin = null)
+        {
+            var user = _repo.GetByDni(dni);
+            if (user == null) return false;
+
+            if (!string.IsNullOrEmpty(name))
+                user.Name = name;
+
+            if (!string.IsNullOrEmpty(password))
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+
+            if (isAdmin.HasValue)
+                user.IsAdmin = isAdmin.Value;
+
+            _repo.Update(user);
+            _repo.Save();
+            return true;
+        }
+
     }
 }

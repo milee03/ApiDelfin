@@ -8,6 +8,7 @@ using System.Text;
 using ApiDelfin.Models;
 using ApiDelfin.Services;
 using ApiDelfin.DTOs.Auth;
+using Microsoft.AspNetCore.Authorization;
 namespace ApiDelfin.Controllers
 {
     [ApiController]
@@ -60,6 +61,22 @@ namespace ApiDelfin.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        [Authorize]
+        [HttpPut("update")]
+        public IActionResult Update([FromBody] UpdateUserRequestDTO model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Dni))
+                return BadRequest("DNI es obligatorio.");
+
+            bool updated = _userService.Update(model.Dni, model.Name, model.Password, model.IsAdmin);
+
+            if (!updated)
+                return NotFound("Usuario no encontrado.");
+
+            return Ok("Usuario actualizado correctamente.");
+        }
+
     }
 }
 
